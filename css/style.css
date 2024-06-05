@@ -3,18 +3,17 @@
     padding: 0;
 }
 
+.hide{
+    display: none;
+}
+
 #clickable{
-    width: 200px;
-    height: 200px;
 
-    margin-left: calc(50% - 100px);
-    margin-right: calc(50% - 100px);
+    position: fixed;
 
-    margin-top: 50px;
+    width: 100%;
+    height: 100%;
 
-    background-color: black;
-
-    border-radius: 50%;
     cursor: pointer;
 }
 
@@ -41,24 +40,109 @@
     background-color: orange;
 }
 
+#counter{
+    position: fixed;
+    top:0;
+    left: 0;
+
+    margin: 1em 0 0 1em;
+    padding: 0.5em;
+
+    border-radius: 5%;
+    box-shadow: 2px 2px 5px 5px black;
+}
 
 
-#shop {
+
+#shops {
     position: absolute;
     bottom: 0;
     width: 100%;
     height: 25vh; /* 1/4 of the screen height */
+    
+    display: flex;
+}
+
+#item-shop{
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    background-color: #f0f0f0;
+    /* background-color: #f0f0f0; */
     scrollbar-width: none; /* For Firefox */
+
+    background-color: #3498db;
 }
 
 .scrollable-grid::-webkit-scrollbar {
     display: none; /* For Chrome, Safari, and Opera */
 }
+
+
+.shop-buttons{
+    position: relative;
+    width: 75px;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+    flex: none;
+    display: flex;
+
+    & div{
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        place-content: center;
+    }
+}
+
+#shop-toggle{
+    display: none;
+}
+
+.label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    z-index: 5;
+}
+
+
+#shop-toggle:checked ~* #items{
+    display: block;
+}
+#shop-toggle:checked ~* #upgrades{
+    display: none;
+}
+
+#shop-toggle:checked ~#item-shop{
+    max-width: 0%;
+}
+#shop-toggle:checked ~#upgrade-shop{
+    transition: max-width 500ms;
+    max-width: 100%;
+}
+
+#upgrades{
+    display: block;
+    background-color: green;
+}
+
+#items{
+    display: none;
+    background-color: #3498db;
+}
+
+#item-shop{
+    transition: max-width 500ms;
+    max-width: 100%;
+}
+
 
 .shop-item {
     width: 150px;
@@ -108,4 +192,60 @@ z-index: 3;
 
     bottom: 0;
     left: 0;
+}
+
+#upgrade-shop{
+    display: grid;
+    grid-template-rows: repeat(3, 1fr); /* 3 rows of equal height */
+    grid-auto-columns: min-content;
+    grid-auto-flow: column; /* Fill columns first, then rows */
+    direction: ltr; 
+
+
+    width: 100%;
+    height: 100%;
+
+    gap: 2px;
+
+    background-color: green;
+
+
+    overflow: hidden;
+    max-width: 0%;
+}
+
+
+.shop-upgrade{
+    flex: none;
+    display: flex;
+    /* position: relative; */
+    justify-content: center;
+    align-items: center;
+
+    height: calc(50px - 4px);
+    
+
+    background-color: brown;
+    color: white;
+    
+    border: 5px solid transparent;
+    border-image: url(../images/steel.jpg) 30;
+    box-sizing: border-box;
+}
+
+.shop-upgrade img{
+    height: 100%;
+}
+
+
+
+.cant-afford::after{
+    content: ""; /* Required for pseudo-elements */
+    position: absolute; /* Position the overlay */
+    top: 0;
+    left: 0;
+    width: 100%; /* Cover the entire element */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent gray color */
+    pointer-events: none; /* Allow clicks to pass through the overlay */
 }

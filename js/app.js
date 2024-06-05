@@ -45,13 +45,13 @@ particlesJS("particles-js", {
             "anim": {
                 "enable": false,
                 "speed": 40,
-                "size_min": 0.1,
+                "size_min": 1,
                 "sync": false
             }
         },
         "line_linked": {
             "enable": true,
-            "distance": 150,
+            "distance": 1500,
             "color": "#0000ff",
             "opacity": 0.4,
             "width": 1
@@ -62,7 +62,7 @@ particlesJS("particles-js", {
             "direction": "none",
             "random": false,
             "straight": false,
-            "out_mode": "out",
+            "out_mode": "bounce",
             "bounce": true,
             "attract": {
                 "enable": false,
@@ -114,9 +114,9 @@ particlesJS("particles-js", {
 });
 
 // Add event listener for mouse click to create particle with specific velocity
-document.getElementById('particles-js').addEventListener('click', function(event) {
+$('#particles-js').on('click', function(event) {
     let pJS = window.pJSDom[0].pJS;
-    let pos = {pos_x: event.clientX,  pos_y: event.clientY};
+    let pos = {pos_x: $(this).position().left,  pos_y: $(this).position().top};
     let nb = 1;
 
     // pJS.fn.modes.pushParticles(1, pos);
@@ -160,8 +160,8 @@ document.getElementById('particles-js').addEventListener('click', function(event
             }
             pJS.tmp.pushing = false;
           
-        }
+        
     
-      
+
 });
 

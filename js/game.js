@@ -7,7 +7,7 @@ class Item {
         ['pencil', { sps: 2, count: 0, cost: 70 }],
         ['sharpie', { sps: 4, count: 0, cost: 100 }],
         ['wizard', { sps: 10, count: 0, cost: 150 }],
-        ['polkadot', { sps: 25, count: 0, cost: 2000 }],
+        ['polkadots', { sps: 25, count: 0, cost: 2000 }],
         ['squaredance', { sps: 111, count: 0, cost: 10000 }],
     ]);
     static perSec = 0;
@@ -21,7 +21,7 @@ class Item {
 
     static add(type) {
         var item = Item.types.get(type);
-        if(item.cost <= score){
+        if (item.cost <= score) {
             score -= item.cost;
             console.log(type);
             item.count += 1;
@@ -37,7 +37,7 @@ class Upgrade {
     static available = [];
     static purchased = [];
 
-    constructor(type, flat, mult, discount, cost) {
+    constructor(cost, type = 'default', flat = 0, mult = 1, discount = 1) {
         this.type = type;
         this.flat = flat;
         this.mult = mult;
@@ -45,14 +45,22 @@ class Upgrade {
         this.cost = cost;
     }
 
-    buy(){
-        if(score >= this.cost){
+    buy($me) {
+        if (score >= this.cost) {
             score -= this.cost;
+
+            $me.addClass('do-remove');
             this.triggerEffect()
+            Upgrade.purchased.push(this)
+
+            const index = Upgrade.available.indexOf(5);
+            if (index > -1) { // only splice array when item is found
+                Upgrade.available.splice(index, 1); // 2nd parameter means remove one item only
+            }
         }
     }
 
-    triggerEffect(){
+    triggerEffect() {
         var itemType = Item.types.get(this.type);
 
         itemType.cost *= this.discount;
@@ -61,10 +69,31 @@ class Upgrade {
     }
 
     static makeAvailable(upgrade) {
-        $('#upgrade-shop').append(
-            $('<div/>', {"class":'shop-upgrade has-price'})
-            .append('<img/>', {src:'images/' + upgrade.type + '_small.png'}).data('thing', upgrade)
+
+        this.available.push(upgrade);
+
+        this.available.sort((a, b) => a.cost - b.cost);
+
+        $('#upgrade-shop').empty();
+
+        this.available.forEach(function (upg) {
+
+            $('#upgrade-shop').append(
+                $('<div/>', { "class": 'shop-upgrade has-price' })
+                    .append($('<img/>', { src: 'images/' + upg.type + '.png', "class":'upgrade-icon' }))
+                    .data('thing', upg)
+                    .on('click', function () {
+                        console.log("shop upgrade clicked on");
+                        $(this).data('thing').buy($(this));
+                    })
+            )
+        }
         )
+        $('#upgrade-shop').append(
+            $('<div/>').addClass('bumper')
+        );
+
+
     }
 }
 
@@ -87,18 +116,27 @@ $(document).ready(function () {
         }
     });
 
+
     initItemShop();
 
     setInterval(() => {
         Item.harvest(100);
-        reflectCanBuy()
+        reflectCanBuy();
+        $('do-remove').remove();
     }, 100);
+
+    Upgrade.makeAvailable(new Upgrade( 100,'auto', flat = 1));
+    Upgrade.makeAvailable(new Upgrade( 10,'guy', flat = 1));
+    Upgrade.makeAvailable(new Upgrade( 15,'pencil', flat = 1));
+    Upgrade.makeAvailable(new Upgrade( 1000,'sharpie', flat = 1));
+    Upgrade.makeAvailable(new Upgrade( 112,'wizard', flat = 1));
+    Upgrade.makeAvailable(new Upgrade( 25,'polkadots', flat = 1));
 });
 
 function initItemShop() {
     Item.types.forEach((data, type) => {
         $('#item-shop')
-            .append($('<div/>', {"class":'shop-item has-price'}).on('click', () => Item.add(type))
+            .append($('<div/>', { "class": 'shop-item has-price' }).on('click', () => Item.add(type))
                 .append($('<div/>', { "class": 'name' }).text(type))
                 .append($('<img/>', { src: 'images/' + type + '_bg.png', "class": 'bg' }))
                 .append($('<img/>', { src: 'images/' + type + '.png', "class": 'fg' }))
@@ -113,17 +151,22 @@ function updateCounter() {
     $('#counter').html('Score: ' + score.toFixed(2));
 }
 
-function reflectCanBuy(){
-    $('.has-price').each(function (){
-        $(this).toggleClass('cant-afford', $(this).data('thing').cost > score);
-    })
+function reflectCanBuy() {
+    try {
+
+        $('.has-price').each(function () {
+            $(this).toggleClass('cant-afford', $(this).data('thing').cost > score);
+        })
+    } catch (error) {
+
+    }
 }
 
-function getImage(prefix, suffix){
+function getImage(prefix, suffix) {
     try {
-        
+
     } catch (error) {
-        
+
     }
 }
 

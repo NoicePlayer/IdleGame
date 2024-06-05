@@ -4,11 +4,11 @@ class Item {
         ['auto', { sps: 0.1, count: 0, cost: 10 }],
         ['guy', { sps: 0.3, count: 0, cost: 25 }],
         ['slingshot', { sps: 1, count: 0, cost: 45 }],
-        // ['pencil', { sps: 2, count: 0, cost: 70 }],
-        // ['sharpie', { sps: 4, count: 0, cost: 100 }],
-        // ['wizard', { sps: 10, count: 0, cost: 150 }],
-        // ['polkadot', { sps: 25, count: 0, cost: 2000 }],
-        // ['squaredance', { sps: 111, count: 0, cost: 10000 }],
+        ['pencil', { sps: 2, count: 0, cost: 70 }],
+        ['sharpie', { sps: 4, count: 0, cost: 100 }],
+        ['wizard', { sps: 10, count: 0, cost: 150 }],
+        ['polkadot', { sps: 25, count: 0, cost: 2000 }],
+        ['squaredance', { sps: 111, count: 0, cost: 10000 }],
     ]);
     static perSec = 0;
 

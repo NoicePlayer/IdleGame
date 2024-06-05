@@ -1,0 +1,111 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#clickable{
+    width: 200px;
+    height: 200px;
+
+    margin-left: calc(50% - 100px);
+    margin-right: calc(50% - 100px);
+
+    margin-top: 50px;
+
+    background-color: black;
+
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#clickable.pulsing{
+    animation: pulse 0.6s ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+#particles-js{
+    width: 100%;
+    height: 100%;
+
+    background-color: orange;
+}
+
+
+
+#shop {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 25vh; /* 1/4 of the screen height */
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    background-color: #f0f0f0;
+    scrollbar-width: none; /* For Firefox */
+}
+
+.scrollable-grid::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+.shop-item {
+    width: 150px;
+    height: 100%; /* Full height of the grid */
+    flex: none;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    padding-top: 15px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: #3498db;
+    color: white;
+    border: solid 1px black;
+    position: relative;
+}
+
+.shop-item .name{
+    z-index: 3;
+}
+
+.shop-item .bg{
+    width: 100%;
+    height: 100%;
+
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.shop-item .fg{
+    z-index: 2;
+    height: 100%;
+    width: auto;
+
+    position: absolute;
+    left: 0;
+}
+
+.shop-item .quant{
+    position: absolute;
+    background-color: white;
+    border-top-right-radius: 5%;
+z-index: 3;
+    color: black;
+
+    bottom: 0;
+    left: 0;
+}
